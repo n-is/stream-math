@@ -15,5 +15,8 @@ type IStreamMath interface {
 
 	// Reset clears the stream algorithm's inner state.
 	Reset()
+	
+	// Counts 1 item from the stream
+	Count()
 
 }
