@@ -1,4 +1,4 @@
-package basic
+package numeric
 
 import (
 	"github.com/stretchr/testify/assert"

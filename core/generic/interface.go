@@ -1,8 +1,8 @@
-package core
+package generic
 
-// IStreamMath defines a streaming data processing
+// IStream defines a streaming data processing
 // math algorithm's interface.
-type IStreamMath interface {
+type IStream interface {
 
 	// Add adds a value to the algorithm.
 	Add(v interface{})
@@ -17,3 +17,4 @@ type IStreamMath interface {
 	Reset()
 
 }
+

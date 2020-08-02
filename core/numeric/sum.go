@@ -1,4 +1,4 @@
-package basic
+package numeric
 
 import "github.com/n-is/stream-math/utils/cast"
 
