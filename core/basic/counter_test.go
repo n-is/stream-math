@@ -25,7 +25,7 @@ func TestCounter (t *testing.T) {
 		for i := 0; i < len(data); i++ {
 			counter.Count()
 		}
-		res := counter.Total_Count()
+		res, _ := counter.Result()
 
 		assertEqual(t, count, res, "")
 	})
@@ -39,7 +39,7 @@ func TestCounter (t *testing.T) {
 			counter.Count()
 			count ++
 		}
-		res := counter.Total_Count()
+		res,_ := counter.Result()
 		assertEqual(t, count, res, "Error!! Problem in counter")
 	})
 
@@ -57,8 +57,25 @@ func TestCounter (t *testing.T) {
 				counter.Reset()
 			}
 		}
-		res := counter.Total_Count()
+		res,_ := counter.Result()
 
 		assertEqual(t, count, res, "")
+	})
+
+	t.Run("Fixed Length Remove test", func(t *testing.T) {
+		data := make([]int, 20)
+		count := 20
+		counter := New_Counter()
+
+		for i := 0; i < len(data); i++ {
+			counter.Count()
+		}
+
+		for i := 0; i < len(data); i+=2 {
+			counter.Remove()
+		}
+		res, _ := counter.Result()
+
+		assertEqual(t, int(count/2), res, "")
 	})
 }
