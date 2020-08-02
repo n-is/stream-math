@@ -1,33 +1,46 @@
 package generic
 
 import (
-	"sync/atomic"
+	"github.com/n-is/stream-math/core"
 )
 
 type Count struct {
-	num uint64
+	fqCnt *core.FreqCounter
 }
 
 func NewCount() *Count {
 	return &Count{
-		num: 0,
+		fqCnt: core.NewFreqCounter(),
 	}
 }
 
-func (m *Count) Add(v interface{}) {
-	atomic.AddUint64(&m.num, 1)
+func (c *Count) Add(v interface{}) {
+	c.fqCnt.Add(v)
 }
 
-func (m *Count) Remove(v interface{}) {
-	if m.num > 0 {
-		m.num--
+func (c *Count) Remove(v interface{}) {
+	c.fqCnt.Remove(v)
+}
+
+func (c *Count) Result() (interface{}, error) {
+	cnt, err := c.calculate(c.fqCnt.Values())
+	if err != nil {
+		return 0, err
 	}
+
+	return cnt, nil
 }
 
-func (m *Count) Result() (interface{}, error) {
-	return m.num, nil
+func (c *Count) Reset() {
+	c.fqCnt.Reset()
 }
 
-func (m *Count) Reset() {
-	m.num = 0
+func (c *Count) calculate(m map[interface{}]uint64) (uint64, error) {
+	cnt := uint64(0)
+
+	for _, v := range m {
+		cnt += v
+	}
+
+	return cnt, nil
 }
